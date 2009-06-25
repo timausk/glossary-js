@@ -100,7 +100,6 @@ var GlossaryJS = {
 		for (i = 0; i < GlossaryJS.glossary.length; i++) {
 			var the_term = GlossaryJS.word.childNodes[0].nodeValue;
 			if(GlossaryJS.glossary[i].word.toUpperCase()==the_term.toUpperCase()) {
-				//$("#glossaryTooltip").html(GlossaryJS.glossary[i].def);
 				GlossaryJS.createGlossaryTooltip(GlossaryJS.word,GlossaryJS.glossary[i]);
 				return true;
 			}
