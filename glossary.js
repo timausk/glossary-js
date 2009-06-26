@@ -63,18 +63,22 @@ var GlossaryJS = {
 			success: function(str){
 				// Create the array of glossary terms
 				var the_words = str.split("\n");
+				var counter = 0;
 				for (i = 0; i < the_words.length; i++) {
-					GlossaryJS.glossary[i] = {};
 					var the_word_arr = the_words[i].split("|");
-					if(the_word_arr) {
-						GlossaryJS.glossary[i].word = the_word_arr[0];
-						GlossaryJS.glossary[i].def = "";
-						GlossaryJS.glossary[i].section = "";
-						if(the_word_arr.length==3) {
-							GlossaryJS.glossary[i].section = " (" + the_word_arr[1] + ")";
-							GlossaryJS.glossary[i].def = the_word_arr[2];
-						} else if (the_word_arr.length==2) {
-							GlossaryJS.glossary[i].def = the_word_arr[1];
+					if(the_word_arr.length<3 || (the_word_arr.length==3&&GlossaryJS_section==the_word_arr[1])) {
+						if(the_word_arr) {
+							GlossaryJS.glossary[counter] = {};
+							GlossaryJS.glossary[counter].word = the_word_arr[0];
+							GlossaryJS.glossary[counter].def = "";
+							GlossaryJS.glossary[counter].section = "";
+							if(the_word_arr.length==3) {
+								GlossaryJS.glossary[counter].section = the_word_arr[1];
+								GlossaryJS.glossary[counter].def = the_word_arr[2];
+							} else if (the_word_arr.length==2) {
+								GlossaryJS.glossary[counter].def = the_word_arr[1];
+							}
+							counter++;
 						}
 					}
 				}
@@ -82,14 +86,11 @@ var GlossaryJS = {
 				var str_output = "";
 				var GlossaryUL = document.getElementById("GlossaryJS");
 				if(GlossaryUL) {
-					for (i = 0; i < GlossaryJS.glossary.length; i++) {
-						var the_section = "";
-						if(GlossaryJS.glossary[i].section.length>0) {
-							the_section = " (" + GlossaryJS.glossary[i].section + ")";
+					for (i=0; i <= GlossaryJS.glossary.length; i++) {
+						if(GlossaryJS.glossary[i]) {
+							str_output += "<li><strong>"+GlossaryJS.glossary[i].word;
+							str_output += "</strong>: "+GlossaryJS.glossary[i].def+"</li>\n";
 						}
-						str_output += "<li><strong>"+GlossaryJS.glossary[i].word;
-						str_output += the_section+"</strong>: "+GlossaryJS.glossary[i].def+"</li>\n";
-			
 					}
 					$("#GlossaryJS").html("<ul>"+str_output+"</ul>");
 				}
