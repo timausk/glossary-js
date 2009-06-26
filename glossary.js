@@ -48,8 +48,7 @@ var GlossaryJS = {
 			cur_word.onclick = function() {
 				var me = this;
 				me.blur();
-				var the_div = document.getElementById("glossaryTooltip");
-				the_div.title = "click to close";
+				$("#glossaryTooltip").attr("title","click to close");
 				GlossaryJS.word = me;
 				GlossaryJS.getDefinition();
 			}
@@ -101,12 +100,15 @@ var GlossaryJS = {
 	getDefinition : function() {
 		for (i = 0; i < GlossaryJS.glossary.length; i++) {
 			var the_term = GlossaryJS.word.childNodes[0].nodeValue;
-			if(GlossaryJS.glossary[i].word.toUpperCase()==the_term.toUpperCase()) {
+			if(jQuery.trim(GlossaryJS.glossary[i].word.toUpperCase())==jQuery.trim(the_term.toUpperCase())) {
 				GlossaryJS.createGlossaryTooltip(GlossaryJS.word,GlossaryJS.glossary[i]);
 				return true;
 			}
 		}
-		$("#glossaryTooltip").html('<span class="red">not in glossary</span>');
+		var tmp_obj = {};
+		tmp_obj.def = "<span style='color:red;font-weight:bold'>Error:</span> not in glossary";
+		tmp_obj.word = GlossaryJS.word;
+		GlossaryJS.createGlossaryTooltip(GlossaryJS.word,tmp_obj);
 	},
 	createGlossaryTooltip : function(word_div,glossary_element) {
 		$("#glossaryTooltip").remove();
