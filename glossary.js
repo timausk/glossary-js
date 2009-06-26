@@ -47,6 +47,7 @@ var GlossaryJS = {
 			}
 			cur_word.onclick = function() {
 				var me = this;
+				me.blur();
 				var the_div = document.getElementById("glossaryTooltip");
 				the_div.title = "click to close";
 				GlossaryJS.word = me;
@@ -88,11 +89,11 @@ var GlossaryJS = {
 				if(GlossaryUL) {
 					for (i=0; i <= GlossaryJS.glossary.length; i++) {
 						if(GlossaryJS.glossary[i]) {
-							str_output += "<li><strong>"+GlossaryJS.glossary[i].word;
-							str_output += "</strong>: "+GlossaryJS.glossary[i].def+"</li>\n";
+							str_output += "<dt>"+GlossaryJS.glossary[i].word;
+							str_output += "</dt><dd>"+GlossaryJS.glossary[i].def+"</dd>\n";
 						}
 					}
-					$("#GlossaryJS").html("<ul>"+str_output+"</ul>");
+					$("#GlossaryJS").html("<dl>"+str_output+"</dl>");
 				}
 			}
 		});
@@ -111,7 +112,7 @@ var GlossaryJS = {
 		$("#glossaryTooltip").remove();
 		var position = $(word_div).position();
 		var the_left;
-		$(word_div).after('<div id="glossaryTooltip">'+glossary_element.def+'</div>');
+		$(word_div).after('<div id="glossaryTooltip"><div class="g_shadow"><div class="g_content"><div class="screen-reader">Definition for '+$(word_div).text()+'</div>'+glossary_element.def+'<div class="screen-reader">End Definition</div></div></div></div>');
 		if(position.left > ($(document).width()*0.5)) {  // put tooltip to left of word
 			the_left = (position.left-$("#glossaryTooltip").innerWidth()) + "px";
 		} else {  // put tooltip to right of word
@@ -128,7 +129,7 @@ var GlossaryJS = {
 			})
 			.mouseout(function() {
 				GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1200);
-			});
+			}).focus();
 	}
 }
 

@@ -7,15 +7,34 @@
 	color:#FF0000;
 }
 #glossaryTooltip {
+	/*
 	background-color:#666666;
 	color:#FFFFFF;
 	border:1px solid #000000;
 	padding:5px;
+	*/
 	font-size:90%;
 	position:absolute;
 	cursor:pointer;
 	max-width:300px;
 }
+#glossaryTooltip .g_shadow,
+#glossaryTooltip .g_content {
+	position: relative;
+	bottom: 3px;
+	right: 3px;
+}
+#glossaryTooltip .g_shadow {
+	background-color: #aaa;
+}
+#glossaryTooltip .g_content {
+	background-color: #f3f3f3;
+	color: #000;
+	border: 1px solid #000;
+	border-top:5px solid #333;
+	padding: 0.5em;
+}
 #clickPosText * {
 	color:#FFFFFF;
 }
+#glossaryTooltip .screen-reader {  position:absolute; left:-999px; width:999px; }
