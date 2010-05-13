@@ -10,10 +10,9 @@
 	Copyright (c) 2010 Michigan State University Board of Trustees
 	License: http://www.opensource.org/licenses/mit-license.php
 --------------------------------------------*/
-GlossaryJS_css = window.GlossaryJS_css || "glossary.css";
-GlossaryJS_txt = window.GlossaryJS_txt || "glossary.txt";
-GlossaryJS_section = window.GlossaryJS_section || "";
-GlossaryJS_autohighlight = window.GlossaryJS_autohighlight || false;
+GlossaryJS_css = window.GlossaryJS_css || "/AngelUploads/Content/RESLIB_MSU_VUDAT/_assoc/_javascript/glossary/glossary.css";
+GlossaryJS_txt = window.GlossaryJS_txt || "/AngelUploads/Content/RESLIB_MSU_VUDAT/_assoc/_javascript/glossary/glossary.txt";
+GlossaryJS_section = window.GlossaryJS_section || "";  
 
 GlossaryJS_css=window.GlossaryJS_css||"glossary.css";GlossaryJS_txt=window.GlossaryJS_txt||"glossary.txt";GlossaryJS_section=window.GlossaryJS_section||"";GlossaryJS_autohighlight=window.GlossaryJS_autohighlight||false;var GlossaryJS={glossary:new Array(),initialize:function(){if(document.createStyleSheet){document.createStyleSheet(GlossaryJS_css);}else{var newCSS=document.createElement('link');newCSS.rel='stylesheet';newCSS.href=GlossaryJS_css;newCSS.type='text/css';document.getElementsByTagName("head")[0].appendChild(newCSS);}
 $(".glossary").each(function(i){var cur=this;cur.className="highlightSpan";});$(".highlightSpan").live("mouseover",function(){GlossaryJS.word=this;clearTimeout(GlossaryJS.timer);GlossaryJS.getDefinition();}).live("mouseout",function(){var the_div=document.getElementById("glossaryTooltip");if(the_div){GlossaryJS.timer=setTimeout("$('#glossaryTooltip').remove()",1000);}}).live("click",function(){var me=this;me.blur();$("#glossaryTooltip").attr("title","click to close");GlossaryJS.word=me;GlossaryJS.getDefinition();});GlossaryJS.loadGlossary();},loadGlossary:function(){$.ajax({type:"GET",url:GlossaryJS_txt,data:"",success:function(str){var the_words=str.split("\n"),counter=0,inarray,the_word_arr

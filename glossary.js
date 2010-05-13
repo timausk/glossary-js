@@ -1,17 +1,19 @@
 /*-------------------------------------------
-	Glossary-JS version 3.0 
+	Glossary-JS version 3.1 
 	Michigan State University
 	Virtual University Design and Technology
 	Creator:  Nathan Lounds
 	Project Page: http://code.google.com/p/glossary-js/
 	Dependencies:  jquery.js (http://jquery.com)
+		auto-highlighting requires jquery.highlight.js (http://bartaz.github.com/sandbox.js/jquery.highlight.html)
 		glossary.css
-	Copyright (c) 2009 Michigan State University Board of Trustees
+	Copyright (c) 2010 Michigan State University Board of Trustees
 	License: http://www.opensource.org/licenses/mit-license.php
 --------------------------------------------*/
 GlossaryJS_css = window.GlossaryJS_css || "glossary.css";
 GlossaryJS_txt = window.GlossaryJS_txt || "glossary.txt";
-GlossaryJS_section = window.GlossaryJS_section || "";  
+GlossaryJS_section = window.GlossaryJS_section || "";
+GlossaryJS_autohighlight = window.GlossaryJS_autohighlight || false;
 var GlossaryJS = {
 	glossary: new Array(),
 	initialize : function() {
@@ -32,27 +34,27 @@ var GlossaryJS = {
 			var cur = this;
 			cur.className = "highlightSpan";
 		});
-		$(".highlightSpan").each(function(i){
-			var cur_word = this;
-			cur_word.onmouseover = function() {
+		
+		$(".highlightSpan")
+			.live("mouseover", function() {
 				GlossaryJS.word = this;
 				clearTimeout(GlossaryJS.timer);
 				GlossaryJS.getDefinition();
-			}
-			cur_word.onmouseout = function() {
+			})
+			.live("mouseout", function() {
 				var the_div = document.getElementById("glossaryTooltip");
 				if(the_div) {
-					GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1200);
+					GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1000);
 				}
-			}
-			cur_word.onclick = function() {
+			})
+			.live("click", function() {
 				var me = this;
 				me.blur();
 				$("#glossaryTooltip").attr("title","click to close");
 				GlossaryJS.word = me;
 				GlossaryJS.getDefinition();
-			}
-		});
+			});
+
 		GlossaryJS.loadGlossary();
 	},
 	loadGlossary: function() {
@@ -62,26 +64,40 @@ var GlossaryJS = {
 			data: "",
 			success: function(str){
 				// Create the array of glossary terms
-				var the_words = str.split("\n");
-				var counter = 0;
+				var the_words = str.split("\n"), counter = 0, inarray, the_word_arr
 				for (i = 0; i < the_words.length; i++) {
-					var the_word_arr = the_words[i].split("|");
+					inarray = false;
+					the_word_arr = the_words[i].split("|");
 					if(the_word_arr.length<3 || (the_word_arr.length==3&&GlossaryJS_section==the_word_arr[1])) {
 						if(the_word_arr) {
-							GlossaryJS.glossary[counter] = {};
-							GlossaryJS.glossary[counter].word = the_word_arr[0];
-							GlossaryJS.glossary[counter].def = "";
-							GlossaryJS.glossary[counter].section = "";
-							if(the_word_arr.length==3) {
-								GlossaryJS.glossary[counter].section = the_word_arr[1];
-								GlossaryJS.glossary[counter].def = the_word_arr[2];
-							} else if (the_word_arr.length==2) {
-								GlossaryJS.glossary[counter].def = the_word_arr[1];
+							if(the_word_arr[0].length>1) {
+								for(k = 0; k < GlossaryJS.glossary.length; k++) {
+									if(the_word_arr[0]===GlossaryJS.glossary[k].word) {
+										inarray = true;
+										k = GlossaryJS.glossary.length;
+									}
+								}
+								if(inarray===false) {
+									GlossaryJS.glossary[counter] = {};
+									GlossaryJS.glossary[counter].word = the_word_arr[0];
+									if(GlossaryJS_autohighlight===true) {
+										$(document.body).highlight(GlossaryJS.glossary[counter].word, { wordsOnly: true, className: 'highlightSpan' });
+									}
+									GlossaryJS.glossary[counter].def = "";
+									GlossaryJS.glossary[counter].section = "";
+									if(the_word_arr.length==3) {
+										GlossaryJS.glossary[counter].section = the_word_arr[1];
+										GlossaryJS.glossary[counter].def = the_word_arr[2];
+									} else if (the_word_arr.length==2) {
+										GlossaryJS.glossary[counter].def = the_word_arr[1];
+									}
+									counter++;
+								}
 							}
-							counter++;
 						}
 					}
 				}
+				
 				// Make the glossary unordered list (if there's a div for it)
 				var str_output = "";
 				var GlossaryUL = document.getElementById("GlossaryJS");
@@ -130,7 +146,7 @@ var GlossaryJS = {
 				clearTimeout(GlossaryJS.timer);
 			})
 			.mouseout(function() {
-				GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1200);
+				GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1000);
 			}).focus();
 	}
 }
