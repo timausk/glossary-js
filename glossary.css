@@ -1,35 +1,75 @@
 .highlightSpan {
-	cursor:help;
-	font-weight:bold;
-	border-bottom:1px dotted #333;
-
+    border-bottom: 1px dotted #333333;
+    cursor: help;
+    font-weight: bold;
 }
 .red {
-	color:#FF0000;
+    color: #FF0000;
 }
 #glossaryTooltip {
-	font-size:90%;
-	position:absolute;
-	cursor:pointer;
-	max-width:300px;
+    cursor: pointer;
+    font-size: 90%;
+    max-width: 300px;
+    position: absolute;
 }
-#glossaryTooltip .g_shadow,
-#glossaryTooltip .g_content {
-	position: relative;
-	bottom: 3px;
-	right: 3px;
+#glossaryTooltip .g_shadow, #glossaryTooltip .g_content {
+    bottom: 3px;
+    position: relative;
+    right: 3px;
 }
 #glossaryTooltip .g_shadow {
-	background-color: #aaa;
+    background-color: #AAAAAA;
 }
 #glossaryTooltip .g_content {
-	background-color: #f3f3f3;
-	color: #000;
-	border: 1px solid #000;
-	border-top:10px solid #0000FF;
-	padding: 0.5em;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F3F3F3;
+    border-color: #0000FF #000000 #000000;
+    border-right: 1px solid #000000;
+    border-style: solid;
+    border-width: 10px 1px 1px;
+    color: #000000;
+    padding: 0.5em;
 }
 #clickPosText * {
-	color:#FFFFFF;
+    color: #FFFFFF;
 }
-#glossaryTooltip .screen-reader {  position:absolute; left:-999px; width:999px; }
+#glossaryTooltip .screen-reader {
+    left: -999px;
+    position: absolute;
+    width: 999px;
+}
+#GlossaryJS dt {
+    border-top: 1px solid #DDDDDD;
+    font-weight: bold;
+    margin-top: 5px;
+    padding-top: 10px;
+}
+#GlossaryJS dd {
+    padding: 5px 0 15px;
+}
+#GlossaryJS h3.toc_letter {
+    clear: both;
+    color: #3567A2;
+    display: block;
+    font-size: 2em;
+    margin: 10px auto;
+    padding: 15px;
+    text-align: center;
+}
+#GlossaryJS .jump_bar {
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    display: block;
+    font-size: 0.85em;
+    margin: 20px auto 10px;
+    text-align: center;
+}
+#GlossaryJS .jump_bar a, .jump_bar span {
+    display: inline-block;
+    font-size: 1.3em;
+    padding: 5px;
+}
