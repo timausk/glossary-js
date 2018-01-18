@@ -1,5 +1,5 @@
 /*-------------------------------------------
-	Glossary-JS version 3.2 
+	Glossary-JS version 3.2
 	Michigan State University
 	Virtual University Design and Technology
 	Creator:  Nathan Lounds
@@ -32,25 +32,25 @@ var GlossaryJS = {
 			document.getElementsByTagName("head")[0].appendChild(newCSS);
 		}
 		//]]>
-		
+
 		$(".glossary").each(function(i){
 			var cur = this;
 			cur.className = "highlightSpan";
 		});
-		
+
 		$(".highlightSpan")
-			.live("mouseover", function() {
+			.on("mouseover", function() {
 				GlossaryJS.word = this;
 				clearTimeout(GlossaryJS.timer);
 				GlossaryJS.getDefinition();
 			})
-			.live("mouseout", function() {
+			.on("mouseout", function() {
 				var the_div = document.getElementById("glossaryTooltip");
 				if(the_div) {
 					GlossaryJS.timer = setTimeout("$('#glossaryTooltip').remove()",1000);
 				}
 			})
-			.live("click", function() {
+			.on("click", function() {
 				var me = this;
 				me.blur();
 				$("#glossaryTooltip").attr("title","click to close");
@@ -106,14 +106,14 @@ var GlossaryJS = {
 							} else {
 								//console.log(the_word_arr);  uncomment this line to find lines without def's
 							}
-						} 
+						}
 					}
 				}
 				if(GlossaryJS_autohighlight===true && highlight_arr.length>0) {
 					//$("#section_instruct_proc").highlight(highlight_arr, { wordsOnly: true, className: 'highlightSpan' });
 					$(GlossaryJS_selector).highlight(highlight_arr, { wordsOnly: true, className: 'highlightSpan' });
 				}
-				
+
 				// Make the glossary unordered list (if there's a div for it)
 				var str_output = "";
 				var GlossaryUL = document.getElementById("GlossaryJS");
@@ -133,7 +133,7 @@ var GlossaryJS = {
 								if(prev_first_letter!=tmp_first_letter) {
 									// new letter
 									while(k<=GlossaryJS_toc_array.length-1) {
-										if(GlossaryJS_toc_array[k]===tmp_first_letter) { 
+										if(GlossaryJS_toc_array[k]===tmp_first_letter) {
 											tmp_output = "<a name='glossary_letter_" + GlossaryJS_toc_array[k] + "' class='anchor'></a><h3 class='toc_letter'>" + GlossaryJS_toc_array[k] + "</h3>" + tmp_output;
 											jump_bar_arr.push(new Array(GlossaryJS_toc_array[k], true));
 											k++;
