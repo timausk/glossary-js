@@ -1,3 +1,7 @@
+.Stil1 {
+  font-family: Verdana, Arial, Helvetica, sans-serif
+}
+
 .highlightSpan {
     border-bottom: 1px dotted #333333;
     cursor: help;
